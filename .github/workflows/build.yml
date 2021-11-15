@@ -33,11 +33,11 @@ jobs:
      - uses: actions/checkout@v1
      - name: Build LaGriT
        run: |
-         make exodus
-         make release
+         #make exodus
+         make WITH_EXODUS=0 release
 
-     - name: Test LaGriT
-       run: make test
+     #- name: Test LaGriT
+     #  run: make test
 
      - name: Prepare for upload
        run: |
