@@ -1,23 +1,18 @@
 name: CI
 
 on: [push]
-env:
-  LAGRIT_VERSION: 3.3.2
 
 jobs:
   build:
     name: ${{ matrix.config.name }}
     runs-on: ${{ matrix.config.os }}
+    env:
+      LAGRIT_VERSION: 0.0.1
+    
     strategy:
       fail-fast: false
       matrix:
         config:
-        #- {
-        #    name: "Windows (MSVC)", artifact: "LaGriT_Windows_x86.exe",
-        #    os: windows-latest,
-        #    cc: "cl", cxx: "cl", fc: "gfortran", python: "3.6"
-        #    environment_script: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvars64.bat"
-        #  }
         - {
             name: "Windows (MinGW)", artifact: "LaGriT-${{ env.LAGRIT_VERSION }}-win64.zip",
             os: windows-latest,
@@ -34,26 +29,25 @@ jobs:
             cc: "clang", cxx: "clang++", fc: "gfortran", python: "3.6"
           }
 
-
     steps:
-    - uses: actions/checkout@v1
-    - name: Build LaGriT
-      run: |
-        make exodus
-        make release
+     - uses: actions/checkout@v1
+     - name: Build LaGriT
+       run: |
+         make exodus
+         make release
 
-    - name: Test LaGriT
-      run: make test
+     - name: Test LaGriT
+       run: make test
 
-    - name: Prepare for upload
-      run: |
-        mkdir LaGriT-${{ env.LAGRIT_VERSION }}/
-        cp src/lagrit LaGriT-${{ env.LAGRIT_VERSION }}/LaGriT-${{ env.LAGRIT_VERSION }}.exe
-        cp LICENSE.md LaGriT-${{ env.LAGRIT_VERSION }}/LICENSE
-        cp README.md LaGriT-${{ env.LAGRIT_VERSION }}/README.md
-        zip -r ${{ matrix.artifact }} LaGriT-${{ env.LAGRIT_VERSION }}/
+     - name: Prepare for upload
+       run: |
+         mkdir LaGriT-${{ env.LAGRIT_VERSION }}/
+         cp src/lagrit LaGriT-${{ env.LAGRIT_VERSION }}/LaGriT-${{ env.LAGRIT_VERSION }}.exe
+         cp LICENSE.md LaGriT-${{ env.LAGRIT_VERSION }}/LICENSE
+         cp README.md LaGriT-${{ env.LAGRIT_VERSION }}/README.md
+         zip -r ${{ matrix.artifact }} LaGriT-${{ env.LAGRIT_VERSION }}/
 
-    - uses: actions/upload-artifact@v2
-      with:
-        name: ${{ matrix.artifact }}
-        path: ${{ matrix.artifact }}
+     - uses: actions/upload-artifact@v2
+       with:
+         name: ${{ matrix.artifact }}
+         path: ${{ matrix.artifact }}
