@@ -14,17 +14,17 @@ jobs:
       matrix:
         config:
         - {
-            name: "Windows (MinGW)", artifact: "LaGriT-${{ env.LAGRIT_VERSION }}-win64.zip",
+            name: "Windows (MinGW)", artifact: "LaGriT-$LAGRIT_VERSION-win64.zip",
             os: windows-latest,
             cc: "gcc", cxx: "g++", fc: "gfortran", python: "3.6"
           }
         - {
-            name: "Ubuntu (GCC)", artifact: "LaGriT-${{ env.LAGRIT_VERSION }}-linux64.zip",
+            name: "Ubuntu (GCC)", artifact: "LaGriT-$LAGRIT_VERSION-linux64.zip",
             os: ubuntu-latest,
             cc: "gcc", cxx: "g++", fc: "gfortran", python: "3.6"
           }
         - {
-            name: "macOS (Clang)", artifact: "LaGriT-${{ env.LAGRIT_VERSION }}-mac64.zip",
+            name: "macOS (Clang)", artifact: "LaGriT-$LAGRIT_VERSION-mac64.zip",
             os: macos-latest,
             cc: "clang", cxx: "clang++", fc: "gfortran", python: "3.6"
           }
